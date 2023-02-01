@@ -3,7 +3,11 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-const routes = []
+const routes = [
+  // 懒加载
+  { path: '/reg', component: () => import('@/views/Register/index.vue') },
+  { path: '/login', component: () => import('@/views/Login/index.vue') }
+]
 
 const router = new VueRouter({
   routes

@@ -3,14 +3,14 @@
 import request from '@/utils/request.js'
 
 // 封装-发起注册请求
-export const registerAPI = () => {
+export const registerAPI = ({ username, password, repassword }) => {
   return request({
     url: '/api/reg',
     method: 'POST',
     data: {
-      username: 'zsjzsj',
-      password: '111111',
-      repassword: '111111'
+      username,
+      password,
+      repassword
     }
   })
 }

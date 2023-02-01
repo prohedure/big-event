@@ -11,7 +11,11 @@ module.exports = {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
 
+    // 允许单引号和反引号
     quotes: ['error', 'single', { allowTemplateLiterals: true }],
-    'space-before-function-paren': 0
+    // 去掉函数名和括号之间的空格检查
+    'space-before-function-paren': 0,
+    // 关闭驼峰命名规则
+    'vue/multi-word-component-names': 0
   }
 }
