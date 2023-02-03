@@ -81,7 +81,11 @@ export default {
           // 成功登陆
           this.$message.success(res.message)
 
+          // 存token
           this.updateToken(res.token)
+
+          // 跳转主页
+          this.$router.push('/')
         } else {
           return false
         }

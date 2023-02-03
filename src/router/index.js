@@ -5,7 +5,7 @@ Vue.use(VueRouter)
 
 const routes = [
   // 懒加载
-  { path: '/', redirect: '/login' },
+  { path: '/', component: () => import('@/views/Layout/index.vue') },
   { path: '/login', component: () => import('@/views/Login/index.vue') },
 
   { path: '/reg', component: () => import('@/views/Register/index.vue') }
