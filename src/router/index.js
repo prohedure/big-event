@@ -5,8 +5,10 @@ Vue.use(VueRouter)
 
 const routes = [
   // 懒加载
-  { path: '/reg', component: () => import('@/views/Register/index.vue') },
-  { path: '/login', component: () => import('@/views/Login/index.vue') }
+  { path: '/', redirect: '/login' },
+  { path: '/login', component: () => import('@/views/Login/index.vue') },
+
+  { path: '/reg', component: () => import('@/views/Register/index.vue') }
 ]
 
 const router = new VueRouter({

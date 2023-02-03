@@ -1,5 +1,5 @@
 <template>
-  <!-- 页面盒子 -->
+  <!-- 注册页面盒子 -->
   <div class="reg-container">
     <!-- 小盒子 -->
     <div class="reg-box">
@@ -35,7 +35,9 @@
 
         <el-form-item>
           <el-button type="primary" @click="registerFn">注 册</el-button>
-          &nbsp;<el-link type="info">已有账号？去登录</el-link>
+          &nbsp;<el-link type="info" @click="$router.push('/login')"
+            >已有账号？去登录</el-link
+          >
         </el-form-item>
       </el-form>
     </div>
@@ -88,9 +90,8 @@ export default {
         if (valid) {
           const { data: res } = await registerAPI(this.form)
           console.log(`output->res`, res)
-          if (res.status !== 0) {
-            this.$message.error(res.message)
-          }
+          if (res.code !== 0) return this.$message.error(res.message)
+
           this.$message.success(res.message)
           // 跳转到登录页面
           this.$router.push('/login')
@@ -142,11 +143,6 @@ export default {
       }
       .el-link.el-link--info {
         color: rgb(46, 58, 68);
-        transition: 0.5s;
-      }
-      .el-link.el-link--info:hover {
-        color: rgb(10, 18, 255);
-        text-decoration: underline;
         transition: 0.5s;
       }
     }
