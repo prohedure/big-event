@@ -17,7 +17,7 @@
             <el-menu-item index="2-3">选项3</el-menu-item>
           </el-submenu></el-menu
         >
-        <el-link :underline="false">退出</el-link>
+        <el-link :underline="false" @click="quitFn">退出</el-link>
       </div>
     </el-header>
 
@@ -84,6 +84,33 @@ export default {
     return {
       activeIndex: '1'
     }
+  },
+  methods: {
+    // 退出登录
+    quitFn() {
+      this.$confirm('此操作将退出登陆,确认退出?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          // 删除 vuex
+          this.$store.commit('updateToken', '')
+          // 跳转路由
+          this.$router.push('/login')
+
+          this.$message({
+            type: 'success',
+            message: '退出成功!'
+          })
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消退出'
+          })
+        })
+    }
   }
 }
 </script>
@@ -145,10 +172,10 @@ body > .el-container {
     justify-content: center;
     align-items: center;
     img {
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
       border-radius: 200px;
-      margin-right: 10px;
+      margin-right: 20px;
     }
   }
 }
