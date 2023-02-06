@@ -1,6 +1,5 @@
 // 封装 axios 请求
 // 步骤2：封装具体请求，向外暴露为命名变量
-import store from '@/store'
 import request from '@/utils/request.js'
 
 // 封装-发起注册请求
@@ -44,10 +43,7 @@ export const loginAPI = ({ username, password }) => {
  */
 export const userInfoAPI = () => {
   return request({
-    url: '/my/userinfo',
-    headers: {
-      Authorization: store.state.token
-    }
+    url: '/my/userinfo'
   })
 }
 
@@ -57,9 +53,6 @@ export const userInfoAPI = () => {
  */
 export const navInfoAPI = () => {
   return request({
-    url: '/my/menus',
-    headers: {
-      Authorization: store.state.token
-    }
+    url: '/my/menus'
   })
 }
