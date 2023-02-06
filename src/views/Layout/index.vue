@@ -2,9 +2,10 @@
   <el-container>
     <!-- 头部 -->
     <el-header>
-      <div class="title">GIS职位管理系统</div>
+      <div class="title">后台管理系统</div>
       <div class="nav">
-        <img src="@/assets/images/cloudHead.jpg" alt="" />
+        <img v-if="user_pic" :src="user_pic" alt="" />
+        <img v-else src="@/assets/images/cloudHead.jpg" alt="" />
         <el-menu
           :default-active="activeIndex"
           class="el-menu-demo"
@@ -15,8 +16,8 @@
             <el-menu-item index="2-1">选项1</el-menu-item>
             <el-menu-item index="2-2">选项2</el-menu-item>
             <el-menu-item index="2-3">选项3</el-menu-item>
-          </el-submenu></el-menu
-        >
+          </el-submenu>
+        </el-menu>
         <el-link :underline="false" @click="quitFn">退出</el-link>
       </div>
     </el-header>
@@ -26,8 +27,9 @@
       <!-- 侧边导航 -->
       <el-aside class="aside-nav" width="250px">
         <div class="welcome">
-          <img src="@/assets/images/cloudHead.jpg" alt="" />
-          <span>欢迎 xxx</span>
+          <img v-if="user_pic" :src="user_pic" alt="" />
+          <img v-else src="@/assets/images/cloudHead.jpg" alt="" />
+          <span>欢迎 {{ nickname || username }}</span>
         </div>
         <!-- 侧边导航 -->
 
@@ -36,36 +38,42 @@
           class="el-menu-vertical-demo"
           background-color="rgba(0,0,0,0)"
         >
-          <el-submenu index="1">
+          <el-menu-item index="/home">
+            <i class="el-icon-location"></i>
+            <span slot="title">首页</span>
+          </el-menu-item>
+          <el-submenu index="/topic">
             <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>导航一</span>
+              <i class="el-icon-menu"></i>
+              <span>文章管理</span>
             </template>
-            <el-menu-item-group>
-              <template slot="title">分组一</template>
-              <el-menu-item index="1-1">选项1</el-menu-item>
-              <el-menu-item index="1-2">选项2</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group title="分组2">
-              <el-menu-item index="1-3">选项3</el-menu-item>
-            </el-menu-item-group>
-            <el-submenu index="1-4">
-              <template slot="title">选项4</template>
-              <el-menu-item index="1-4-1">选项1</el-menu-item>
-            </el-submenu>
+
+            <el-menu-item index="/topic1">
+              <i class="el-icon-document-remove"></i>
+              <span>文章分类</span>
+            </el-menu-item>
+            <el-menu-item index="/topic2">
+              <i class="el-icon-document-remove"></i>
+              <span>文章列表</span></el-menu-item
+            >
           </el-submenu>
-          <el-menu-item index="2">
-            <i class="el-icon-menu"></i>
-            <span slot="title">导航二</span>
-          </el-menu-item>
-          <el-menu-item index="3" disabled>
-            <i class="el-icon-document"></i>
-            <span slot="title">导航三</span>
-          </el-menu-item>
-          <el-menu-item index="4">
-            <i class="el-icon-setting"></i>
-            <span slot="title">导航四</span>
-          </el-menu-item>
+
+          <el-submenu index="/my">
+            <template slot="title">
+              <i class="el-icon-user-solid"></i>
+              <span>用户管理</span>
+            </template>
+
+            <el-menu-item index="/my1">
+              <i class="el-icon-user"></i><span>基本资料</span></el-menu-item
+            >
+            <el-menu-item index="/my2">
+              <i class="el-icon-user"></i><span>更换头像</span></el-menu-item
+            >
+            <el-menu-item index="/my3">
+              <i class="el-icon-user"></i><span>重置密码</span></el-menu-item
+            >
+          </el-submenu>
         </el-menu>
       </el-aside>
       <!-- 主体 -->
@@ -78,6 +86,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'Layout',
   data() {
@@ -96,6 +105,7 @@ export default {
         .then(() => {
           // 删除 vuex
           this.$store.commit('updateToken', '')
+          this.$store.commit('updateUserinfo', {})
           // 跳转路由
           this.$router.push('/login')
 
@@ -111,6 +121,9 @@ export default {
           })
         })
     }
+  },
+  computed: {
+    ...mapGetters(['nickname', 'username', 'user_pic'])
   }
 }
 </script>
@@ -150,21 +163,24 @@ body > .el-container {
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin-right: 10px;
 
     img {
       width: 30px;
       height: 30px;
       border-radius: 200px;
     }
+
     .el-menu {
-      background-color: rgba(0, 0, 0, 0);
-    }
-    .el-menu--horizontal > .el-submenu .el-submenu__title {
-      color: black;
+      background: transparent;
     }
   }
 }
-
+/deep/ .el-menu--horizontal > .el-menu-item:not(.is-disabled):focus,
+/deep/ .el-menu--horizontal > .el-menu-item:not(.is-disabled):hover,
+/deep/ .el-menu--horizontal > .el-submenu .el-submenu__title:hover {
+  background-color: rgba(255, 255, 255, 0);
+}
 .aside-nav {
   .welcome {
     padding: 10px;
