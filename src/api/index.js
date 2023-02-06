@@ -50,3 +50,16 @@ export const userInfoAPI = () => {
     }
   })
 }
+
+/**
+ * 获取侧边栏导航信息
+ * @returns Promise
+ */
+export const navInfoAPI = () => {
+  return request({
+    url: '/my/menus',
+    headers: {
+      Authorization: store.state.token
+    }
+  })
+}

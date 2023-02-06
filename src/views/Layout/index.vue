@@ -37,43 +37,33 @@
           default-active="2"
           class="el-menu-vertical-demo"
           background-color="rgba(0,0,0,0)"
+          router
         >
-          <el-menu-item index="/home">
-            <i class="el-icon-location"></i>
-            <span slot="title">首页</span>
-          </el-menu-item>
-          <el-submenu index="/topic">
-            <template slot="title">
-              <i class="el-icon-menu"></i>
-              <span>文章管理</span>
-            </template>
-
-            <el-menu-item index="/topic1">
-              <i class="el-icon-document-remove"></i>
-              <span>文章分类</span>
+          <template v-for="item in navInfo">
+            <el-menu-item
+              v-if="!item.children"
+              :index="item.indexPath"
+              :key="item.indexPath"
+            >
+              <i :class="item.icon"></i>
+              <span slot="title">{{ item.title }}</span>
             </el-menu-item>
-            <el-menu-item index="/topic2">
-              <i class="el-icon-document-remove"></i>
-              <span>文章列表</span></el-menu-item
-            >
-          </el-submenu>
+            <el-submenu v-else :index="item.indexPath" :key="item.indexPath">
+              <template slot="title">
+                <i :class="item.icon"></i>
+                <span>{{ item.title }}</span>
+              </template>
 
-          <el-submenu index="/my">
-            <template slot="title">
-              <i class="el-icon-user-solid"></i>
-              <span>用户管理</span>
-            </template>
-
-            <el-menu-item index="/my1">
-              <i class="el-icon-user"></i><span>基本资料</span></el-menu-item
-            >
-            <el-menu-item index="/my2">
-              <i class="el-icon-user"></i><span>更换头像</span></el-menu-item
-            >
-            <el-menu-item index="/my3">
-              <i class="el-icon-user"></i><span>重置密码</span></el-menu-item
-            >
-          </el-submenu>
+              <el-menu-item
+                v-for="(obj, index) in item.children"
+                :key="index"
+                :index="obj.indexPath"
+              >
+                <i :class="obj.icon"></i>
+                <span>{{ obj.title }}</span>
+              </el-menu-item>
+            </el-submenu>
+          </template>
         </el-menu>
       </el-aside>
       <!-- 主体 -->
@@ -87,11 +77,13 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { navInfoAPI } from '@/api'
 export default {
   name: 'Layout',
   data() {
     return {
-      activeIndex: '1'
+      activeIndex: '1',
+      navInfo: []
     }
   },
   methods: {
@@ -120,10 +112,18 @@ export default {
             message: '已取消退出'
           })
         })
+    },
+    // 获取侧边导航信息
+    async getNavInfo() {
+      const { data: res } = await navInfoAPI()
+      this.navInfo = res.data
     }
   },
   computed: {
     ...mapGetters(['nickname', 'username', 'user_pic'])
+  },
+  created() {
+    this.getNavInfo()
   }
 }
 </script>
