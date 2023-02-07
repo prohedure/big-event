@@ -68,7 +68,7 @@
       </el-aside>
       <!-- 主体 -->
       <el-container>
-        <el-main>Main</el-main>
+        <el-main><router-view></router-view></el-main>
         <el-footer>Footer</el-footer>
       </el-container>
     </el-container>
@@ -146,7 +146,6 @@ export default {
 .el-main {
   background-color: #e9eef3;
   color: #333;
-  text-align: center;
 }
 
 body > .el-container {

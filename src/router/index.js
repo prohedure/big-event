@@ -6,7 +6,34 @@ Vue.use(VueRouter)
 
 const routes = [
   // 懒加载
-  { path: '/', component: () => import('@/views/Layout/index.vue') },
+  {
+    path: '/',
+    redirect: '/home',
+    component: () => import('@/views/Layout/index.vue'),
+    children: [
+      { path: 'home', component: () => import('@/views/Home/index.vue') },
+      {
+        path: 'art-cate',
+        component: () => import('@/views/Arcticle/ArtCate/index.vue')
+      },
+      {
+        path: 'art-list',
+        component: () => import('@/views/Arcticle/ArtList/index.vue')
+      },
+      {
+        path: 'user-avatar',
+        component: () => import('@/views/User/UserAvatar/index.vue')
+      },
+      {
+        path: 'user-info',
+        component: () => import('@/views/User/UserInfo/index.vue')
+      },
+      {
+        path: 'user-pwd',
+        component: () => import('@/views/User/UserPwd/index.vue')
+      }
+    ]
+  },
   { path: '/login', component: () => import('@/views/Login/index.vue') },
 
   { path: '/reg', component: () => import('@/views/Register/index.vue') }
