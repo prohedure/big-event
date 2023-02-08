@@ -16,6 +16,8 @@ module.exports = {
     // 去掉函数名和括号之间的空格检查
     'space-before-function-paren': 0,
     // 关闭驼峰命名规则
-    'vue/multi-word-component-names': 0
+    'vue/multi-word-component-names': 0,
+    // 下划线
+    camelcase: 'off'
   }
 }

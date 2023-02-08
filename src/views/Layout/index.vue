@@ -34,7 +34,7 @@
         <!-- 侧边导航 -->
 
         <el-menu
-          default-active="2"
+          :default-active="this.$route.path"
           class="el-menu-vertical-demo"
           background-color="rgba(0,0,0,0)"
           router
@@ -69,7 +69,7 @@
       <!-- 主体 -->
       <el-container>
         <el-main><router-view></router-view></el-main>
-        <el-footer>Footer</el-footer>
+        <el-footer> {{ dateYear }} {{ dateWeek }} {{ dateDay }}</el-footer>
       </el-container>
     </el-container>
   </el-container>
@@ -83,7 +83,26 @@ export default {
   data() {
     return {
       activeIndex: '1',
-      navInfo: []
+      navInfo: [],
+      // 底部日期
+      dateDay: null,
+      dateYear: null,
+      dateWeek: null,
+      weekday: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+      timer: null
+    }
+  },
+  mounted() {
+    this.timer = setInterval(() => {
+      const date = this.$dayjs(new Date())
+      this.dateDay = date.format('HH:mm:ss')
+      this.dateYear = date.format('YYYY-MM-DD')
+      this.dateWeek = date.format(this.weekday[date.day()])
+    }, 1000)
+  },
+  beforeDestroy() {
+    if (this.timer) {
+      clearInterval(this.timer)
     }
   },
   methods: {
