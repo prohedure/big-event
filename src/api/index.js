@@ -96,3 +96,20 @@ export const uploadAvatarAPI = (avatar) => {
     }
   })
 }
+
+/**
+ * 修改后台用户密码
+ * @param {obg} param0 包含 old_pwd,new_pwd,re_pwd 的对象
+ * @returns promise
+ */
+export const updatePwdAPI = (old_pwd, new_pwd, re_pwd) => {
+  return request({
+    url: '/my/updatepwd',
+    method: 'PATCH',
+    data: {
+      old_pwd,
+      new_pwd,
+      re_pwd
+    }
+  })
+}
