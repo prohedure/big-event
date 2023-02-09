@@ -19,7 +19,7 @@
             @change="getFile"
           />&nbsp;&nbsp;
 
-          <el-button type="primary"
+          <el-button type="primary" @click="uploadFn"
             ><span class="el-icon-check"></span>&nbsp;&nbsp;提交</el-button
           >
         </el-form-item>
@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import { uploadAvatarAPI } from '@/api'
 export default {
   name: 'UserAvatar',
   data() {
@@ -62,6 +63,16 @@ export default {
           this.avatar = e.target.result
         }
       }
+    },
+    // 上传头像，更新后台
+    async uploadFn() {
+      const { data: res } = await uploadAvatarAPI(this.avatar)
+      if (res.code !== 0) return this.$message.error(res.message)
+
+      this.$message.success(res.message)
+
+      // 更新vuex信息
+      this.$store.dispatch('getUserinfoActions')
     }
   }
 }

@@ -57,6 +57,11 @@ export const navInfoAPI = () => {
   })
 }
 
+/**
+ * 修改用户信息
+ * @param {*} param0 vuex 中的用户信息
+ * @returns Promise对象
+ */
 export const updateUserInfoAPI = ({
   id,
   username,
@@ -73,6 +78,21 @@ export const updateUserInfoAPI = ({
       nickname,
       email,
       user_pic
+    }
+  })
+}
+
+/**
+ * 上传图片到后台
+ * @param {*} avatar 图片的base64字符串
+ * @returns Promise
+ */
+export const uploadAvatarAPI = (avatar) => {
+  return request({
+    url: '/my/update/avatar',
+    method: 'PATCH',
+    data: {
+      avatar
     }
   })
 }
